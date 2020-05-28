@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>首页</h1>
+  <div id="tubiao" style="background:#1A8BE8;width: 600px;height:400px;float:left"></div>
+
+  <script src="https://cdn.bootcss.com/echarts/4.6.0/echarts.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+  <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('tubiao'));
+
+    // 指定图表的配置项和数据
+    var option = {
+      title: {
+        text: '服装销售分析'
+      },
+      tooltip: {},
+      legend: {
+        data: ['销量']
+      },
+      xAxis: {
+        data: []
+      },
+      yAxis: {},
+      series: [{
+        name: '销量',
+        type: 'bar',
+        data: []
+      }]
+    };
+
+    $.ajax({
+      url: '/aaa'
+    }).then(res => {
+      console.log(res)
+      res.forEach((result, k) => {
+        option.xAxis.data[k] = result.title;
+        option.series[0].data[k] = result.visit;
+        
+
+        if (option.series[0].data.length ==5) {
+          myChart.setOption(option);
+          console.log(option)
+        }
+      })
+      //option.series[0].data=res;
+      // 使用刚指定的配置项和数据显示图表。
+
+    })
+
+
+
+
+
+
+  </script>
+</body>
+
+</html>
